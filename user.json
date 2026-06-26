@@ -1,5 +1,25 @@
-{
-  "name": "abhishek",
-  "email": "sfsdf",
-  "password": "sdfs"
-}
+[
+  {
+    "name": "abhishek",
+    "email": "sfsdf",
+    "password": "sdfs"
+  },
+  {
+    "name": "sakshi",
+    "email": "sfsdf",
+    "password": "sdfs"
+  },
+  {
+    "name": "sdf",
+    "email": "sf",
+    "password": "sf"
+  },
+  {
+    "email": "",
+    "password": ""
+  },
+  {
+    "email": "",
+    "password": ""
+  }
+]

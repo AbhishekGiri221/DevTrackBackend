@@ -8,24 +8,17 @@ app.use(cors());
 app.use(express.json())
 
 
-app.get("/user",(req,res)=>{
-    console.log(req.body);
-
-    console.log(typeof(req.body));
-
-    res.json({
-        message : "listnening here"
-    })
-})
-
 app.post("/signup",async(req,res)=>{
 
     try {
-        const data = await fs.readFile("./user.json","utf-8");
-        console.log(typeof(data));
-        console.log(data);
+        const previousData = await fs.readFile("./user.json","utf-8");
+        const data = JSON.parse(previousData);
 
-        await fs.writeFile("./user.json",JSON.stringify(req.body,null,2));
+        const user = req.body;
+
+        data.push(user);
+
+        await fs.writeFile("./user.json",JSON.stringify(data,null,2));
 
         res.json({
             message : "user created Succesfully"
@@ -35,6 +28,19 @@ app.post("/signup",async(req,res)=>{
         console.log(error);
     }
 
+});
+
+
+app.post("/login",async(req,res)=>{
+    const previousData = await fs.readFile("./user.json","utf-8");
+    const{email,password} = req.body;
+
+    console.log(`email is. : ${email} password is ${password}`);
+    const data = JSON.parse(previousData);
+
+    const user = data.filter((user)=> user.email == email && user.password == password);
+    console.log(user);
+    res.status(200);
 })
 
 app.listen(3000,()=>{
