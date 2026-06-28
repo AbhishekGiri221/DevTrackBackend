@@ -34,3 +34,10 @@ exports.signup = async(data)=>{
     }
 }
 
+exports.login = async(user) => {
+    const file = await fs.readFile("database/user.json","utf-8");
+
+    // const user = ;
+
+}
+
