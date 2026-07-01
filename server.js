@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");  // --> return a middleware function we have to use it before handling request
 const authRoutes = require("../Devtrackbackend/routes/authRoutes");
+require("dotenv").config();
 
 const app = express()
 app.use(cors());
