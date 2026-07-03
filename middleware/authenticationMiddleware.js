@@ -1,25 +1,23 @@
 const jwt = require("jsonwebtoken");
 
-function auth(req,res,next) {
-    console.log("req in middleware" ,req.body);
+function auth(req, res, next) {
     const authHeader = req.headers.authorization;
-    console.log(authHeader);
 
-    if(!authHeader){
-        return res.status(401).json({message : "token not found"});
+    if (!authHeader) {
+        return res.status(401).json({ message: "token not found" });
     }
 
     const token = authHeader.split(" ")[1];
-    console.log(token);
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
+        console.log(`the decode text is ${JSON.stringify(decoded)} in middleware`)
         req.user = decoded; // --> here we are creating our new property user and storing the decoded user there
 
+        console.log(`the set req.user is in middlware ${JSON.stringify(req.user)}`);
         next();
     } catch (error) {
-        res.status(401).json({message : "Invalid token"});
+        res.status(401).json({ message: "Invalid token" });
     }
 }
 

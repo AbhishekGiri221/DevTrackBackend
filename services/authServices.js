@@ -57,7 +57,7 @@ exports.login = async (loginUser) => {
         }
 
         const token = generateToken(users);
-        console.log(`token is : ${token}`);
+
         return (
             {
                 message: "login Successfull",
