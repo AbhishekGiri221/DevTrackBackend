@@ -1,3 +1,4 @@
+const { param } = require("../routes/authRoutes");
 const taskServices = require("../services/taskServices");
 
 exports.createTask = async(req,res)=>{
@@ -8,6 +9,7 @@ exports.createTask = async(req,res)=>{
             userId : req.user.id,
             title : req.body.title,
             description : req.body.description,
+            status : req.body.taskStatus,
             priority : req.body.priority,
             duedate : req.body.dueDate,
         }
@@ -23,8 +25,6 @@ exports.createTask = async(req,res)=>{
 exports.getTask = async(req,res)=>{
     try {
 
-        console.log(`came here in taskcontorller.getTask and the req is ${JSON.stringify(req.user)}`)
-        console.log(`the req.user.id in contorller is ${req.user.id}`);
         const taskList = await taskServices.getTask(req.user.id);
         
         // return taskList; ---> send in json format 
@@ -33,4 +33,27 @@ exports.getTask = async(req,res)=>{
         res.status(404).json(error.message);
     }
 
+}
+
+exports.deleteTask = async (req,res) =>{
+    try{
+        const response = await taskServices.deleteTask(Number(req.params.id));
+
+        res.status(200).json(response.message);
+
+    } catch(error){
+        res.status(404).json(error.message);
+    }
+}
+
+exports.updateTask = async (req,res) =>{
+    console.log(`the body is ${req.body}`);
+    // console.log(req);
+    try {
+        const response = await taskServices.updateTask(Number(req.params.id), req.body);
+
+        res.status(200).json(response);
+    } catch (error) { 
+        res.status(404).json(error.message);
+    }
 }
