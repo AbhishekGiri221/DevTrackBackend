@@ -9,9 +9,9 @@ exports.createTask = async(req,res)=>{
             userId : req.user.id,
             title : req.body.title,
             description : req.body.description,
-            status : req.body.taskStatus,
+            status : req.body.status,
             priority : req.body.priority,
-            duedate : req.body.dueDate,
+            duedate : req.body.duedate,
         }
 
         const task = await taskServices.createTask(newTask);
@@ -27,6 +27,7 @@ exports.getTask = async(req,res)=>{
 
         const taskList = await taskServices.getTask(req.user.id);
         
+        console.log(`the taskList is ${taskList}`);
         // return taskList; ---> send in json format 
         res.status(200).json(taskList);
     } catch (error) {
@@ -56,4 +57,18 @@ exports.updateTask = async (req,res) =>{
     } catch (error) { 
         res.status(404).json(error.message);
     }
+}
+
+exports.completeTask = async(req,res) =>{
+    try {
+        console.log(`req.came in controller`)
+        const response = await taskServices.completeTask(Number(req.params.id), req.body);
+        
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(404).json(error.message);
+
+    }
+
+
 }

@@ -57,11 +57,27 @@ exports.updateTask = async (taskId, taskToUpdate) =>{
     taskList[taskIndex].id = taskId;
     taskList[taskIndex].title = taskToUpdate.title;
     taskList[taskIndex].description = taskToUpdate.description;
-    taskList[taskIndex].status = taskToUpdate.taskStatus;
+    taskList[taskIndex].status = taskToUpdate.status;
     taskList[taskIndex].priority = taskToUpdate.priority;
-    taskList[taskIndex].duedate = taskToUpdate.dueDate;
+    taskList[taskIndex].duedate = taskToUpdate.duedate;
 
     await fs.writeFile("database/task.json",JSON.stringify(taskList,null,2));
 
     return taskList
+}
+
+exports.completeTask = async(taskId, taskStatus) =>{
+    const data = await fs.readFile("database/task.json", "utf-8");
+
+    const taskList = JSON.parse(data);
+
+    const taskIndex = taskList.findIndex((task) => task.id === taskId);
+
+    taskList[taskIndex].status = taskStatus.status;
+
+    await fs.writeFile("database/task.json",JSON.stringify(taskList,null,2));
+
+    return{
+        message : "task completed"
+    }
 }
