@@ -66,6 +66,26 @@ exports.updateGoal = async(id, goal)=>{
     return goalsWithProgress.find(item => item.goal.id === id);
 }
 
+exports.deleteGoal = async(id) =>{
+    const goalList = JSON.parse(await fs.readFile("database/goals.json","utf-8"));
+
+    const updatedGoalList = goalList.filter(goal => goal.id !== id);
+
+    await fs.writeFile("database/goals.json",JSON.stringify(updatedGoalList,null,2));
+
+    const mileStoneList = JSON.parse(await fs.readFile("database/mileStone.json","utf-8"));
+
+    const updatedMileStoneList = mileStoneList.filter(item => item.goalid !== id);
+
+
+    await fs.writeFile("database/mileStone.json",JSON.stringify(updatedMileStoneList,null,2));
+    console.log("fiel written successfully");
+    return {
+        message : "deleted"
+    }
+} 
+
+
 
 
 exports.addMilestone = async(mileStone)=>{

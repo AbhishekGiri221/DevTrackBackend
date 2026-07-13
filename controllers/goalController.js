@@ -51,6 +51,22 @@ exports.getGoal = async(req, res)=>{
 
 }
 
+exports.deleteGoal = async(req,res) =>{
+    try{
+        const response = await goalServices.deleteGoal(Number(req.params.id));
+
+        res.status(200).json({
+            message : "deleted successfully"
+        })
+    }catch(error){
+        res.status(400).json({
+            message : "failed to delete"
+        })
+    }
+}
+
+
+
 exports.addMileStone = async(req,res) =>{
     try {
         
