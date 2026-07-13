@@ -106,8 +106,23 @@ exports.getMileStone = async(goalId) => {
     const data = await fs.readFile("database/mileStone.json","utf-8");
 
     const mileStoneList = JSON.parse(data);
-    console.log(`the mileStone that i a returning is ${JSON.stringify(mileStoneList)}`);
     const mileStone = mileStoneList.filter((m)=> m.goalid === goalId)
 
     return mileStone;
+}
+
+
+exports.addMileStoneTask = async(id , task)=>{
+
+    const data = await fs.readFile("database/mileStone.json","utf-8");
+
+    const mileStoneList = JSON.parse(data);
+
+    const index = mileStoneList.findIndex((item) => item.id === id);
+
+
+    mileStoneList[index].tasks = [...(mileStoneList[index].tasks || []), task];
+
+    await fs.writeFile("database/mileStone.json",JSON.stringify(mileStoneList,null,2));
+    return mileStoneList[index];
 }

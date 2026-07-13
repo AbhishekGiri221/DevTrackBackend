@@ -1,3 +1,4 @@
+const { response } = require("express");
 const goalServices = require("../services/goalServices");
 
 exports.addGoal = async (req, res) => {
@@ -105,4 +106,23 @@ exports.getMileStone = async(req, res) => {
         })
     }
 
+}
+
+exports.addMileStoneTask = async (req,res) => {
+    try{
+        const createMileStoneTask = {
+            title : req.body.title,
+            description : req.body.description,
+            priority : req.body.priority,
+            status : req.body.status
+        }
+        console.log(createMileStoneTask, " comming from frontend", req.params.milestoneId)
+        const response = await goalServices.addMileStoneTask(Number(req.params.milestoneId), createMileStoneTask);
+        console.log(response)
+        res.status(200).json(response);
+    }catch(error){
+        res.status(400).json({
+            message : "unable to add Data"
+        })
+    }
 }
